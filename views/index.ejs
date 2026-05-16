@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <h1>File Uploader</h1>
+    <% if (user) { %>
+        <h2>Hello <%= user.firstname %></h2>
+        <a href="/log-out">Log-out</a>
+    <% } else { %>
+        <a href="/sign-up">Sign Up</a>
+        <a href="/login">Log in</a>
+    <% } %>
+   
+  </body>
+</html>
