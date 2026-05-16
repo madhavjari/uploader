@@ -10,7 +10,6 @@ module.exports = function () {
         const user = await prisma.user.findUnique({
           where: { username: username },
         });
-        console.log(user);
         if (!user) {
           return done(null, false, { message: "Incorrect username" });
         }
@@ -26,7 +25,6 @@ module.exports = function () {
   );
 
   passport.serializeUser((user, done) => {
-    console.log(user.id);
     done(null, user.id);
   });
 
