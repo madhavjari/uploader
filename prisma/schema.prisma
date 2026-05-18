@@ -26,3 +26,18 @@ model Session {
   data      String 
   expiresAt   DateTime
 }
+
+model Folder{
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  files Files[]
+}
+
+model Files{
+  id          Int         @id @default(autoincrement())
+  name        String
+  size        String
+  timestamp   DateTime    @default(now())
+  folder      Folder      @relation(fields: [folderId], references: [id])
+  folderId    Int
+}

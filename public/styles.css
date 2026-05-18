@@ -35,7 +35,11 @@ body {
     "Segoe UI",
     sans-serif;
   background:
-    radial-gradient(circle at 18% 12%, rgba(20, 107, 92, 0.16), transparent 30%),
+    radial-gradient(
+      circle at 18% 12%,
+      rgba(20, 107, 92, 0.16),
+      transparent 30%
+    ),
     linear-gradient(135deg, #f7f3eb 0%, #eef4f1 48%, #f6eee6 100%);
 }
 
@@ -90,9 +94,21 @@ input {
   min-height: 620px;
   padding: 28px;
   background:
-    linear-gradient(140deg, rgba(255, 253, 248, 0.96), rgba(255, 253, 248, 0.82)),
-    repeating-linear-gradient(90deg, rgba(21, 23, 26, 0.06) 0 1px, transparent 1px 86px),
-    repeating-linear-gradient(0deg, rgba(21, 23, 26, 0.04) 0 1px, transparent 1px 86px);
+    linear-gradient(
+      140deg,
+      rgba(255, 253, 248, 0.96),
+      rgba(255, 253, 248, 0.82)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(21, 23, 26, 0.06) 0 1px,
+      transparent 1px 86px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(21, 23, 26, 0.04) 0 1px,
+      transparent 1px 86px
+    );
 }
 
 .topbar {
@@ -145,7 +161,7 @@ input {
 
 .hero-content {
   width: min(100%, 660px);
-  padding: 128px 16px 64px;
+  padding: 64px 16px 64px;
 }
 
 .eyebrow {
@@ -166,7 +182,7 @@ p {
 h1 {
   max-width: 680px;
   margin-bottom: 18px;
-  font-size: clamp(2.45rem, 7vw, 5.25rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   line-height: 0.96;
   letter-spacing: 0;
 }
@@ -378,7 +394,7 @@ input[type="file"]::file-selector-button {
   }
 
   .hero-content {
-    padding: 88px 0 36px;
+    padding: 36px 0 36px;
   }
 
   .form-grid {

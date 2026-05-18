@@ -5,6 +5,7 @@ const indexRouter = require("./routes/indexRouter");
 const signupRouter = require("./routes/signupRouter");
 const loginRouter = require("./routes/loginRouter");
 const uploadRouter = require("./routes/uploadRouter");
+const folderRouter = require("./routes/folderRouter");
 const session = require("express-session");
 const configurePassport = require("./config/passport");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
@@ -39,6 +40,7 @@ app.use(loginRouter);
 app.use(signupRouter);
 app.use(indexRouter);
 app.use(uploadRouter);
+app.use(folderRouter);
 
 app.get("/log-out", (req, res, next) => {
   req.logout((err) => {

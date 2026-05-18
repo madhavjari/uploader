@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <button class="new-folder">Create a folder</button>
+    <% if (error) { %>
+        <h3><%= error %></h3>
+    <% } %>
+    <dialog>
+      <form action="/folder" method="post">
+        <button class="close-button">x</button>
+        <label for="folder">Folder name</label>
+        <input
+          type="text"
+          required
+          minlength="2"
+          maxlength="15"
+          name="folder"
+        />
+        <button type="submit">Create</button>
+        <button type="reset">Cancel</button>
+      </form>
+    </dialog>
+  </body>
+  <script>
+    const addFolderButton = document.querySelector(".new-folder");
+    const dialog = document.querySelector("dialog");
+    addFolderButton.addEventListener("click", () => {
+      dialog.showModal();
+    });
+
+    const closeButton = document.querySelector(".close-button");
+    closeButton.addEventListener("click", () => {
+      dialog.close();
+    });
+  </script>
+</html>
