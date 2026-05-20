@@ -11,7 +11,6 @@ async function getUpload(req, res) {
 
 async function postUpload(req, res) {
   const file = req.file;
-  console.log(file);
   res.redirect("/");
 }
 

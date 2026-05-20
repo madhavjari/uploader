@@ -6,6 +6,7 @@ const signupRouter = require("./routes/signupRouter");
 const loginRouter = require("./routes/loginRouter");
 const uploadRouter = require("./routes/uploadRouter");
 const folderRouter = require("./routes/folderRouter");
+const fileRouter = require("./routes/filesRouter");
 const session = require("express-session");
 const configurePassport = require("./config/passport");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
@@ -36,20 +37,27 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(loginRouter);
-app.use(signupRouter);
-app.use(indexRouter);
-app.use(uploadRouter);
-app.use(folderRouter);
-
 app.get("/log-out", (req, res, next) => {
   req.logout((err) => {
     if (err) {
       return next(err);
     }
-    res.redirect("/");
+    req.session.destroy((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.clearCookie("connect.sid");
+      res.redirect("/");
+    });
   });
 });
+
+app.use(loginRouter);
+app.use(signupRouter);
+app.use(indexRouter);
+app.use(uploadRouter);
+app.use(folderRouter);
+app.use(fileRouter);
 
 app.listen(PORT, (error) => {
   if (error) {

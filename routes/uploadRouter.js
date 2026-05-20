@@ -5,7 +5,7 @@ const upload = multer({ dest: "uploads/" });
 
 const uploadRouter = Router();
 
-uploadRouter.get("/upload", uploadController.getUpload);
+uploadRouter.get("/:username/:folderid/upload", uploadController.getUpload);
 
 uploadRouter.post(
   "/upload",

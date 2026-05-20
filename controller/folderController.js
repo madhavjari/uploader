@@ -6,9 +6,13 @@ async function getFolder(req, res) {
       title: "Log-in",
     });
   }
+  if (req.params.username !== req.user.username)
+    return res.status(404).redirect("/");
+
   const allFolders = await prisma.folder.findMany({
     select: { name: true, id: true },
   });
+
   res.render("folder", {
     title: "Folder",
     error: undefined,

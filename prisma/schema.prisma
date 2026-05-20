@@ -36,7 +36,7 @@ model Folder{
 model Files{
   id          Int         @id @default(autoincrement())
   name        String
-  size        String
+  size        Int
   timestamp   DateTime    @default(now())
   folder      Folder      @relation(fields: [folderId], references: [id])
   folderId    Int

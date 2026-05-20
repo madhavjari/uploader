@@ -10,37 +10,24 @@
             <span>File Uploader</span>
           </a>
           <div class="nav-actions">
-            <% if (user) { %>
-              <a class="nav-link" href="/log-out">Log out</a>
-            <% } else { %>
-              <a class="nav-link" href="/login">Log in</a>
-              <a class="button button-small button-primary" href="/sign-up">Sign up</a>
-            <% } %>
+            <a class="nav-link" href="/login">Log in</a>
+            <a class="button button-small button-primary" href="/sign-up"
+              >Sign up</a
+            >
           </div>
         </nav>
 
         <div class="hero-content">
           <p class="eyebrow">Local disk storage</p>
           <h1>Simple uploads, cleanly handled.</h1>
-          <% if (user) { %>
-            <p class="hero-copy">
-              Welcome back, <%= user.firstname %>. Your upload space is ready.
-            </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="/upload">Upload a file</a>
-              <a href="/<%= user.username %>"> Go to folder</a>
-              <a class="button button-secondary" href="/log-out">Log out</a>
-            </div>
-          <% } else { %>
-            <p class="hero-copy">
-              Create an account, log in, and save files to your local uploader
-              in one focused flow.
-            </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="/sign-up">Create account</a>
-              <a class="button button-secondary" href="/login">Log in</a>
-            </div>
-          <% } %>
+          <p class="hero-copy">
+            Create an account, log in, and save files to your local uploader in
+            one focused flow.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/sign-up">Create account</a>
+            <a class="button button-secondary" href="/login">Log in</a>
+          </div>
         </div>
       </section>
     </main>
