@@ -3,8 +3,8 @@ const folderController = require("../controller/folderController");
 
 const folderRouter = Router();
 
-folderRouter.get("/folder", folderController.getFolder);
+folderRouter.get("/:username", folderController.getFolder);
 
-folderRouter.post("/folder", folderController.postFolder);
+folderRouter.post("/:username", folderController.postFolder);
 
 module.exports = folderRouter;

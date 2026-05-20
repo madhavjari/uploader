@@ -6,8 +6,11 @@
     <% if (error) { %>
         <h3><%= error %></h3>
     <% } %>
+    <% folderName.forEach((folder) =>{ %>
+      <a href="<%= username %>/<%= folder.id %>"><%= folder.name %></a>
+    <% }) %>
     <dialog>
-      <form action="/folder" method="post">
+      <form action="/<%= username %>" method="post">
         <button class="close-button">x</button>
         <label for="folder">Folder name</label>
         <input

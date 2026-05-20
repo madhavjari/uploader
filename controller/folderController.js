@@ -6,9 +6,14 @@ async function getFolder(req, res) {
       title: "Log-in",
     });
   }
+  const allFolders = await prisma.folder.findMany({
+    select: { name: true, id: true },
+  });
   res.render("folder", {
     title: "Folder",
     error: undefined,
+    folderName: allFolders,
+    username: req.user.username,
   });
 }
 
@@ -20,9 +25,14 @@ async function postFolder(req, res) {
     },
   });
   if (folderExist) {
+    const allFolders = await prisma.folder.findMany({
+      select: { name: true, id: true },
+    });
     res.status(400).render("folder", {
       title: "Folder",
       error: "Folder name already exists",
+      folderName: allFolders,
+      username: req.user.username,
     });
   } else {
     await prisma.folder.create({
@@ -30,7 +40,7 @@ async function postFolder(req, res) {
         name: folderName,
       },
     });
-    res.redirect("/folder");
+    res.redirect(`/${req.user.username}`);
   }
 }
 
