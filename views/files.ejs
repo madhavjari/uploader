@@ -2,6 +2,14 @@
 <html lang="en">
   <%- include("./partials/head.ejs") %>
   <body>
-    <a href="/upload">Upload a file</a>
+    <a href="/<%= username %>/<%= id %>/upload">Upload a file</a>
+    <% if(allFiles) { %>
+      <h2>All Files</h2>
+      <% allFiles.forEach((file) =>{ %>
+        <h3><%= file.name %></h3>
+        <h4>size: <%= file.size %></h4>
+        <h4>Upload Date: <%= file.timestamp %> </h4>
+      <% }) %>
+    <% } %>
   </body>
 </html>

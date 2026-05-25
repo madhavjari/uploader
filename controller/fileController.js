@@ -12,8 +12,17 @@ async function getFile(req, res) {
   if (!folderName) {
     return res.status(404).redirect("/");
   }
+  const folderId = req.params.folderid;
+  const username = req.params.username;
+  const allFiles = await prisma.folder.findMany({
+    select: { files: true },
+    where: { id: parseInt(folderId) },
+  });
   res.render("files", {
     title: folderName.name,
+    id: folderId,
+    username: username,
+    allFiles: allFiles[0].files,
   });
 }
 

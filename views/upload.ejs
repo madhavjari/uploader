@@ -13,7 +13,11 @@
           <h1>Choose a file to store locally.</h1>
           <p>Your selected file will be saved by the uploader service.</p>
         </div>
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form
+          action="/<%= username %>/<%= id %>/upload"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <label class="file-field" for="avatar">
             <span>Select file</span>
             <span class="file-dropzone">
@@ -21,7 +25,9 @@
             </span>
           </label>
           <div class="upload-actions">
-            <button class="button button-primary" type="submit">Upload file</button>
+            <button class="button button-primary" type="submit">
+              Upload file
+            </button>
             <a class="button button-secondary" href="/">Back home</a>
           </div>
         </form>
