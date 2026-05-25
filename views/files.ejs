@@ -33,7 +33,7 @@
                   <dl class="file-meta">
                     <div>
                       <dt>Size</dt>
-                      <dd><%= file.size %></dd>
+                      <dd><%= file.size %> kB</dd>
                     </div>
                     <div>
                       <dt>Uploaded</dt>
@@ -41,7 +41,43 @@
                     </div>
                   </dl>
                 </div>
-              </article>
+                <button
+                  class="button button-danger-soft button-small delete-button"
+                  type="button"
+                  aria-label="Delete file <%= file.name %>"
+                  data-dialog="delete-<%= file.id %>"
+                >
+                  Delete
+                </button>
+              </div>
+
+              <dialog class="delete-modal" id="delete-<%= file.id %>">
+                <form
+                  class="modal-card delete-card"
+                  action="/<%= username %>/<%= id %>/<%= file.id %>/delete"
+                  method="post"
+                >
+                  <div class="modal-heading">
+                    <p class="eyebrow">Confirm delete</p>
+                    <h2>Delete this file</h2>
+                  </div>
+                  <p class="message-body">
+                    This removes the file and cannot be recovered.
+                  </p>
+                  <div class="modal-actions">
+                    <button
+                      class="button button-secondary delete-close-modal"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button class="button button-danger" type="submit">
+                      Delete
+                    </button>
+                  </div>
+                </form>
+              </dialog>
+            </article>
             <% }) %>
           </div>
         <% } else { %>
@@ -56,4 +92,19 @@
       </section>
     </main>
   </body>
+  <script>
+    const deleteButtons = document.querySelectorAll(".delete-button");
+    const deleteCloseButtons = document.querySelectorAll(".delete-close-modal");
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const dialog = document.getElementById(button.dataset.dialog);
+        dialog.showModal();
+      });
+    });
+    deleteCloseButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        button.closest("dialog").close();
+      });
+    });
+  </script>
 </html>

@@ -19,7 +19,7 @@ async function postUpload(req, res) {
   const file = req.file;
   const username = req.params.username;
   const id = req.params.folderid;
-  const folderName = await prisma.folder.findUnique({
+  await prisma.folder.findUnique({
     where: { id: parseInt(req.params.folderid) },
   });
 

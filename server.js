@@ -7,6 +7,7 @@ const loginRouter = require("./routes/loginRouter");
 const uploadRouter = require("./routes/uploadRouter");
 const folderRouter = require("./routes/folderRouter");
 const fileRouter = require("./routes/filesRouter");
+const deleteFileRouter = require("./routes/deleteFileRouter.js");
 const deleteFolderRouter = require("./routes/deleteFolderRouter");
 const session = require("express-session");
 const configurePassport = require("./config/passport");
@@ -60,6 +61,7 @@ app.use(uploadRouter);
 app.use(folderRouter);
 app.use(fileRouter);
 app.use(deleteFolderRouter);
+app.use(deleteFileRouter);
 
 app.listen(PORT, (error) => {
   if (error) {

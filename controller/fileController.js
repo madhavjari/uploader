@@ -1,3 +1,4 @@
+const { json } = require("express");
 const { prisma } = require("../lib/prisma.js");
 
 async function getFile(req, res) {
