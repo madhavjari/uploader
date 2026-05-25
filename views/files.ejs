@@ -1,15 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include("./partials/head.ejs") %>
-  <body>
-    <a href="/<%= username %>/<%= id %>/upload">Upload a file</a>
-    <% if(allFiles) { %>
-      <h2>All Files</h2>
-      <% allFiles.forEach((file) =>{ %>
-        <h3><%= file.name %></h3>
-        <h4>size: <%= file.size %></h4>
-        <h4>Upload Date: <%= file.timestamp %> </h4>
-      <% }) %>
-    <% } %>
+  <body class="page app-page">
+    <main class="app-shell">
+      <section class="app-panel">
+        <nav class="topbar app-topbar" aria-label="Primary">
+          <a class="brand" href="/">
+            <span class="brand-mark">FU</span>
+            <span>File Uploader</span>
+          </a>
+          <div class="nav-actions">
+            <a class="button button-secondary" href="/<%= username %>">Folders</a>
+            <a class="button button-primary" href="/<%= username %>/<%= id %>/upload">
+              Upload a file
+            </a>
+          </div>
+        </nav>
+
+        <header class="app-heading">
+          <p class="eyebrow">Folder</p>
+          <h1>All files</h1>
+          <p>Review files stored in this folder and add more when needed.</p>
+        </header>
+
+        <% if(allFiles && allFiles.length) { %>
+          <div class="file-list">
+            <% allFiles.forEach((file) =>{ %>
+              <article class="file-row">
+                <div class="file-icon" aria-hidden="true"></div>
+                <div class="file-main">
+                  <h2><%= file.name %></h2>
+                  <dl class="file-meta">
+                    <div>
+                      <dt>Size</dt>
+                      <dd><%= file.size %></dd>
+                    </div>
+                    <div>
+                      <dt>Uploaded</dt>
+                      <dd><%= file.timestamp %></dd>
+                    </div>
+                  </dl>
+                </div>
+              </article>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="empty-state">
+            <h2>No files yet</h2>
+            <p>Upload the first file to start filling this folder.</p>
+            <a class="button button-primary" href="/<%= username %>/<%= id %>/upload">
+              Upload a file
+            </a>
+          </div>
+        <% } %>
+      </section>
+    </main>
   </body>
 </html>

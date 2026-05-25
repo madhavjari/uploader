@@ -38,6 +38,6 @@ model Files{
   name        String
   size        Int
   timestamp   DateTime    @default(now())
-  folder      Folder      @relation(fields: [folderId], references: [id])
+  folder      Folder      @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId    Int
 }

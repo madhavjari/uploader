@@ -1,94 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include("./partials/head.ejs") %>
-  <body>
-    <button class="new-folder">Create a folder</button>
-    <a class="nav-link" href="/log-out">Log out</a>
-    <% if (error) { %>
-        <h3><%= error %></h3>
-    <% } %>
-    <% folderName.forEach((folder) =>{ %>
-      <div>
-        <a href="<%= username %>/<%= folder.id %>"><%= folder.name %></a>
-        <button class="edit-button">Edit</button>
-        <button
-        class="icon-button delete-button"
-        type="button"
-        aria-label="Delete message"
-        data-dialog="delete-<%= folder.id %>"
-      >
-        Delete
-      </button>
-      <dialog class="delete-modal" id="delete-<%= folder.id %>">
-        <form
-          class="modal-card delete-card"
-          action="/<%= username %>/<%= folder.id %>/delete"
-          method="post"
-        >
-          <div class="modal-heading">
-            <p class="eyebrow">Confirm delete</p>
-            <h2>Delete this folder and content within?</h2>
-          </div>
-          <p class="message-body">
-            This removes all the files from the folder.
-          </p>
-          <div class="modal-actions">
-            <button
-              class="button button-ghost delete-close-modal"
-              type="button"
-            >
-              Cancel
+  <body class="page app-page">
+    <main class="app-shell">
+      <section class="app-panel">
+        <nav class="topbar app-topbar" aria-label="Primary">
+          <a class="brand" href="/">
+            <span class="brand-mark">FU</span>
+            <span>File Uploader</span>
+          </a>
+          <div class="nav-actions">
+            <button class="button button-primary new-folder" type="button">
+              New folder
             </button>
-            <button class="button button-danger" type="submit">
-              Delete
+            <a class="button button-secondary" href="/log-out">Log out</a>
+          </div>
+        </nav>
+
+        <header class="app-heading">
+          <p class="eyebrow">Workspace</p>
+          <h1>Your folders</h1>
+          <p>Organize local uploads into small, tidy collections.</p>
+        </header>
+
+        <% if (error) { %>
+          <div class="notice notice-error"><%= error %></div>
+        <% } %>
+
+        <% if (folderName && folderName.length) { %>
+          <div class="folder-grid">
+            <% folderName.forEach((folder) =>{ %>
+              <article class="folder-card">
+                <a class="folder-link" href="/<%= username %>/<%= folder.id %>">
+                  <span class="folder-icon" aria-hidden="true"></span>
+                  <span class="folder-name"><%= folder.name %></span>
+                </a>
+                <div class="folder-actions">
+                  <button class="button button-secondary button-small edit-button" type="button">
+                    Edit
+                  </button>
+                  <button
+                    class="button button-danger-soft button-small delete-button"
+                    type="button"
+                    aria-label="Delete folder <%= folder.name %>"
+                    data-dialog="delete-<%= folder.id %>"
+                  >
+                    Delete
+                  </button>
+                </div>
+
+                <dialog class="delete-modal" id="delete-<%= folder.id %>">
+                  <form
+                    class="modal-card delete-card"
+                    action="/<%= username %>/<%= folder.id %>/delete"
+                    method="post"
+                  >
+                    <div class="modal-heading">
+                      <p class="eyebrow">Confirm delete</p>
+                      <h2>Delete this folder and content within?</h2>
+                    </div>
+                    <p class="message-body">
+                      This removes all the files from the folder.
+                    </p>
+                    <div class="modal-actions">
+                      <button
+                        class="button button-secondary delete-close-modal"
+                        type="button"
+                      >
+                        Cancel
+                      </button>
+                      <button class="button button-danger" type="submit">
+                        Delete
+                      </button>
+                    </div>
+                  </form>
+                </dialog>
+              </article>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="empty-state">
+            <h2>No folders yet</h2>
+            <p>Create your first folder to start organizing uploads.</p>
+            <button class="button button-primary new-folder" type="button">
+              New folder
             </button>
           </div>
-        </form>
-      </dialog>
-</div>
-    <% }) %>
+        <% } %>
+      </section>
+    </main>
+
     <dialog class="new-folder-dialog">
-      <form action="/<%= username %>" method="post">
-        <button class="close-button">x</button>
-        <label for="folder">Folder name</label>
-        <input
-          type="text"
-          required
-          minlength="2"
-          maxlength="15"
-          name="folder"
-        />
-        <button type="submit">Create</button>
-        <button class="close-button">Cancel</button>
+      <form class="modal-card folder-form" action="/<%= username %>" method="post">
+        <button class="close-button" type="button" aria-label="Close dialog">
+          x
+        </button>
+        <div class="modal-heading">
+          <p class="eyebrow">New folder</p>
+          <h2>Create a folder</h2>
+        </div>
+        <div class="field">
+          <label for="folder">Folder name</label>
+          <input
+            id="folder"
+            type="text"
+            required
+            minlength="2"
+            maxlength="15"
+            name="folder"
+          />
+        </div>
+        <div class="modal-actions">
+          <button class="button button-secondary close-folder-dialog" type="button">
+            Cancel
+          </button>
+          <button class="button button-primary" type="submit">Create</button>
+        </div>
       </form>
     </dialog>
+
+    <script>
+      const addFolderButtons = document.querySelectorAll(".new-folder");
+      const newDialog = document.querySelector(".new-folder-dialog");
+      const deleteButtons = document.querySelectorAll(".delete-button");
+      const deleteCloseButtons = document.querySelectorAll(".delete-close-modal");
+      deleteButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const dialog = document.getElementById(button.dataset.dialog);
+          dialog.showModal();
+        });
+      });
+
+      deleteCloseButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          button.closest("dialog").close();
+        });
+      });
+      addFolderButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          newDialog.showModal();
+        });
+      });
+
+      const closeButton = document.querySelectorAll(
+        ".close-button, .close-folder-dialog",
+      );
+      closeButton.forEach((button) => {
+        button.addEventListener("click", () => {
+          newDialog.close();
+        });
+      });
+    </script>
   </body>
-  <script>
-    const addFolderButton = document.querySelector(".new-folder");
-    const newDialog = document.querySelector(".new-folder-dialog");
-    const deleteButtons = document.querySelectorAll(".delete-button");
-    const deleteCloseButtons = document.querySelectorAll(".delete-close-modal");
-    deleteButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const dialog = document.getElementById(button.dataset.dialog);
-        dialog.showModal();
-      });
-    });
-
-    deleteCloseButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        button.closest("dialog").close();
-      });
-    });
-    addFolderButton.addEventListener("click", () => {
-      newDialog.showModal();
-    });
-
-    const closeButton = document.querySelectorAll(".close-button");
-    closeButton.forEach((button) => {
-      button.addEventListener("click", () => {
-      newDialog.close();
-      })
-    });
-  </script>
 </html>

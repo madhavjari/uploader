@@ -8,7 +8,7 @@ const uploadRouter = Router();
 uploadRouter.get("/:username/:folderid/upload", uploadController.getUpload);
 
 uploadRouter.post(
-  "/:username/:folderid/",
+  "/:username/:folderid/upload",
   upload.single("avatar"),
   uploadController.postUpload,
 );

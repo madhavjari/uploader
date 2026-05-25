@@ -11,8 +11,6 @@ async function postDeleteFolder(req, res) {
     where: { id: parseInt(folderId) },
   });
   res.redirect(`/${req.params.username}`);
-  //   const messageId = req.params.id;
-  //   res.redirect("/");
 }
 
 module.exports = { postDeleteFolder };

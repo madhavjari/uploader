@@ -30,6 +30,7 @@ async function postUpload(req, res) {
       folderId: parseInt(id),
     },
   });
+  res.redirect(`/${username}/${id}`);
 }
 
 module.exports = { getUpload, postUpload };
