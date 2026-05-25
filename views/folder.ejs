@@ -8,9 +8,46 @@
         <h3><%= error %></h3>
     <% } %>
     <% folderName.forEach((folder) =>{ %>
-      <a href="<%= username %>/<%= folder.id %>"><%= folder.name %></a>
+      <div>
+        <a href="<%= username %>/<%= folder.id %>"><%= folder.name %></a>
+        <button class="edit-button">Edit</button>
+        <button
+        class="icon-button delete-button"
+        type="button"
+        aria-label="Delete message"
+        data-dialog="delete-<%= folder.id %>"
+      >
+        Delete
+      </button>
+      <dialog class="delete-modal" id="delete-<%= folder.id %>">
+        <form
+          class="modal-card delete-card"
+          action="/<%= username %>/<%= folder.id %>/delete"
+          method="post"
+        >
+          <div class="modal-heading">
+            <p class="eyebrow">Confirm delete</p>
+            <h2>Delete this folder and content within?</h2>
+          </div>
+          <p class="message-body">
+            This removes all the files from the folder.
+          </p>
+          <div class="modal-actions">
+            <button
+              class="button button-ghost delete-close-modal"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button class="button button-danger" type="submit">
+              Delete
+            </button>
+          </div>
+        </form>
+      </dialog>
+</div>
     <% }) %>
-    <dialog>
+    <dialog class="new-folder-dialog">
       <form action="/<%= username %>" method="post">
         <button class="close-button">x</button>
         <label for="folder">Folder name</label>
@@ -22,20 +59,36 @@
           name="folder"
         />
         <button type="submit">Create</button>
-        <button type="reset">Cancel</button>
+        <button class="close-button">Cancel</button>
       </form>
     </dialog>
   </body>
   <script>
     const addFolderButton = document.querySelector(".new-folder");
-    const dialog = document.querySelector("dialog");
-    addFolderButton.addEventListener("click", () => {
-      dialog.showModal();
+    const newDialog = document.querySelector(".new-folder-dialog");
+    const deleteButtons = document.querySelectorAll(".delete-button");
+    const deleteCloseButtons = document.querySelectorAll(".delete-close-modal");
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const dialog = document.getElementById(button.dataset.dialog);
+        dialog.showModal();
+      });
     });
 
-    const closeButton = document.querySelector(".close-button");
-    closeButton.addEventListener("click", () => {
-      dialog.close();
+    deleteCloseButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        button.closest("dialog").close();
+      });
+    });
+    addFolderButton.addEventListener("click", () => {
+      newDialog.showModal();
+    });
+
+    const closeButton = document.querySelectorAll(".close-button");
+    closeButton.forEach((button) => {
+      button.addEventListener("click", () => {
+      newDialog.close();
+      })
     });
   </script>
 </html>
