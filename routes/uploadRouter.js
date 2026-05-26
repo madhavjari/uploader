@@ -1,7 +1,9 @@
 const { Router } = require("express");
 const uploadController = require("../controller/uploadController");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
 
 const uploadRouter = Router();
 

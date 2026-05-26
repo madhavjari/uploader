@@ -10,6 +10,7 @@ const fileRouter = require("./routes/filesRouter");
 const deleteFileRouter = require("./routes/deleteFileRouter.js");
 const deleteFolderRouter = require("./routes/deleteFolderRouter");
 const editFolderRouter = require("./routes/editFolderRouter.js");
+const editFileRouter = require("./routes/editFileRouter.js");
 const session = require("express-session");
 const configurePassport = require("./config/passport");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
@@ -64,6 +65,7 @@ app.use(fileRouter);
 app.use(deleteFolderRouter);
 app.use(deleteFileRouter);
 app.use(editFolderRouter);
+app.use(editFileRouter);
 
 app.listen(PORT, (error) => {
   if (error) {

@@ -23,9 +23,9 @@
           <p>Review files stored in this folder and add more when needed.</p>
         </header>
 
-        <% if(allFiles && allFiles.length) { %>
+        <% if(files && files.length) { %>
           <div class="file-list">
-            <% allFiles.forEach((file) =>{ %>
+            <% files.forEach((file) =>{ %>
               <article class="file-row">
                 <div class="file-icon" aria-hidden="true"></div>
                 <div class="file-main">
@@ -41,14 +41,23 @@
                     </div>
                   </dl>
                 </div>
-                <button
-                  class="button button-danger-soft button-small delete-button"
-                  type="button"
-                  aria-label="Delete file <%= file.name %>"
-                  data-dialog="delete-<%= file.id %>"
-                >
-                  Delete
-                </button>
+                  <div class="folder-actions">
+                    <button class="button button-secondary button-small edit-button"
+                            type="button"
+                            aria-label="Update file <%= file.name %>"
+                            data-dialog="update-<%= file.id %>"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="button button-danger-soft button-small delete-button"
+                      type="button"
+                      aria-label="Delete file <%= file.name %>"
+                      data-dialog="delete-<%= file.id %>"
+                    >
+                    Delete
+                    </button>
+                  </div>
               </div>
 
               <dialog class="delete-modal" id="delete-<%= file.id %>">
@@ -77,6 +86,25 @@
                   </div>
                 </form>
               </dialog>
+              <dialog class="update-modal" id="update-<%= file.id %>">
+                <form
+                  class="modal-card update-card"
+                  action="/<%= username %>/<%= id %>/<%= file.id %>/update"
+                  method="post"
+                >
+                  <label for="name">File Name: </label>
+                  <input type="text" name="name" value="<%= file.name %>">
+                  <div class="modal-actions">
+                    <button
+                      class="button button-secondary update-close-modal"
+                      type="button "
+                    >
+                      Cancel
+                    </button>
+                    <button class="button button-danger" type="submit">Save</button>
+                  </div>
+                </form>
+              </dialog>
             </article>
             <% }) %>
           </div>
@@ -93,15 +121,16 @@
     </main>
   </body>
   <script>
-    const deleteButtons = document.querySelectorAll(".delete-button");
-    const deleteCloseButtons = document.querySelectorAll(".delete-close-modal");
-    deleteButtons.forEach((button) => {
+    const actionButtons = document.querySelectorAll(".delete-button, .edit-button");
+    const actionCloseButtons = document.querySelectorAll(
+        ".delete-close-modal, .update-close-modal"); 
+    actionButtons.forEach((button) => {
       button.addEventListener("click", () => {
         const dialog = document.getElementById(button.dataset.dialog);
         dialog.showModal();
       });
     });
-    deleteCloseButtons.forEach((button) => {
+    actionCloseButtons.forEach((button) => {
       button.addEventListener("click", () => {
         button.closest("dialog").close();
       });

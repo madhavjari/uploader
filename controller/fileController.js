@@ -1,4 +1,3 @@
-const { json } = require("express");
 const { prisma } = require("../lib/prisma.js");
 
 async function getFile(req, res) {
@@ -15,7 +14,7 @@ async function getFile(req, res) {
   }
   const folderId = req.params.folderid;
   const username = req.params.username;
-  const allFiles = await prisma.folder.findMany({
+  const files = await prisma.folder.findMany({
     select: { files: true },
     where: { id: parseInt(folderId) },
   });
@@ -23,7 +22,7 @@ async function getFile(req, res) {
     title: folderName.name,
     id: folderId,
     username: username,
-    allFiles: allFiles[0].files,
+    files: files[0].files,
   });
 }
 
