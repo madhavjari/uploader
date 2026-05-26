@@ -36,7 +36,11 @@
                   <span class="folder-name"><%= folder.name %></span>
                 </a>
                 <div class="folder-actions">
-                  <button class="button button-secondary button-small edit-button" type="button">
+                  <button class="button button-secondary button-small edit-button"
+                          type="button" 
+                          aria-label="Update folder <%= folder.name %>"
+                          data-dialog="update-<%= folder.id %>"
+                  >
                     Edit
                   </button>
                   <button
@@ -72,6 +76,25 @@
                       <button class="button button-danger" type="submit">
                         Delete
                       </button>
+                    </div>
+                  </form>
+                </dialog>
+                <dialog class="update-modal" id="update-<%= folder.id %>">
+                  <form
+                    class="modal-card update-card"
+                    action="/<%= username %>/<%= folder.id %>/update"
+                    method="post"
+                  >
+                    <label for="name">Folder Name: </label>
+                    <input type="text" name="name" value="<%= folder.name %>">
+                    <div class="modal-actions">
+                      <button
+                        class="button button-secondary update-close-modal"
+                        type="button "
+                      >
+                        Cancel
+                      </button>
+                     <button class="button button-danger" type="submit">Save</button>
                     </div>
                   </form>
                 </dialog>
@@ -122,20 +145,22 @@
     <script>
       const addFolderButtons = document.querySelectorAll(".new-folder");
       const newDialog = document.querySelector(".new-folder-dialog");
-      const deleteButtons = document.querySelectorAll(".delete-button");
-      const deleteCloseButtons = document.querySelectorAll(".delete-close-modal");
-      deleteButtons.forEach((button) => {
+      const actionButtons = document.querySelectorAll(".delete-button, .edit-button");
+      const actionCloseButtons = document.querySelectorAll(
+        ".delete-close-modal, .update-close-modal");
+      actionButtons.forEach((button) => {
         button.addEventListener("click", () => {
           const dialog = document.getElementById(button.dataset.dialog);
           dialog.showModal();
         });
       });
 
-      deleteCloseButtons.forEach((button) => {
+      actionCloseButtons.forEach((button) => {
         button.addEventListener("click", () => {
           button.closest("dialog").close();
         });
       });
+
       addFolderButtons.forEach((button) => {
         button.addEventListener("click", () => {
           newDialog.showModal();
