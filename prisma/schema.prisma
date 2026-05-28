@@ -40,4 +40,6 @@ model Files{
   timestamp   DateTime    @default(now())
   folder      Folder      @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId    Int
+  url         String?
+  path        String?
 }

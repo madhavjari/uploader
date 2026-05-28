@@ -28,21 +28,24 @@ async function postUpload(req, res) {
       where: { id: parseInt(req.params.folderid) },
     });
 
+    const fileName = `${Date.now()}-${file.originalname}`;
+    await supabase.storage.from("uploader").upload(fileName, file.buffer, {
+      contentType: file.mimetype,
+    });
+
+    const { data: publicUrlData } = supabase.storage
+      .from("uploader")
+      .getPublicUrl(fileName);
+
     await prisma.files.create({
       data: {
         name: file.originalname,
         size: parseInt(file.size / 1024),
         folderId: parseInt(id),
+        url: publicUrlData.publicUrl,
+        path: fileName,
       },
     });
-    const { data, error } = await supabase.storage
-      .from("uploader")
-      .upload(file.originalname, file.buffer, {
-        contentType: file.mimetype,
-      });
-
-    console.log("UPLOAD DATA:", data);
-    console.log("UPLOAD ERROR:", error);
 
     res.redirect(`/${username}/${id}`);
   } catch (err) {
