@@ -257,6 +257,10 @@ h1 {
   width: 100%;
 }
 
+.download {
+  height: 20px;
+}
+
 .auth-page {
   background:
     linear-gradient(rgba(244, 240, 232, 0.78), rgba(244, 240, 232, 0.78)),

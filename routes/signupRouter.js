@@ -39,7 +39,6 @@ signupRouter.post(
   validateUser,
   body("confirmpassword")
     .custom((value, { req }) => {
-      console.log(value);
       return value === req.body.password;
     })
     .withMessage("Password does not match"),

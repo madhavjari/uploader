@@ -13,6 +13,7 @@ async function getUpload(req, res) {
     title: "Upload",
     id: id,
     username: username,
+    errors: undefined,
   });
 }
 
@@ -20,7 +21,12 @@ async function postUpload(req, res) {
   try {
     const file = req.file;
     if (!file) {
-      return res.status(400).send("No file uploaded");
+      return res.status(400).render("upload", {
+        title: "Upload",
+        id: req.params.folderid,
+        username: req.params.username,
+        errors: [{ msg: "Choose a file before uploading" }],
+      });
     }
     const username = req.params.username;
     const id = req.params.folderid;

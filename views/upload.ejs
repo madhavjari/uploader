@@ -13,6 +13,7 @@
           <h1>Choose a file to store locally.</h1>
           <p>Your selected file will be saved by the uploader service.</p>
         </div>
+        <%- include("./partials/errors.ejs") %>
         <form
           action="/<%= username %>/<%= id %>/upload"
           method="post"
